@@ -16,6 +16,10 @@ a {
   text-decoration: none;
 }
 
+p {
+  margin: 0;
+}
+
 .main-screen {
   width: 80%;
   margin: 0 auto;
@@ -30,6 +34,7 @@ a {
   justify-content: center;
   align-items: center;
 }
+
 
 /* MENU */
 
@@ -59,6 +64,7 @@ a {
   color: black;
 }
 
+
 /* FEED COMPONENT */
 
 button {
@@ -68,7 +74,7 @@ button {
   cursor: pointer;
 }
 
-.feed-window {
+.window {
   display: flex;
   justify-content: space-between;
 }
@@ -79,3 +85,15 @@ button {
   align-items: flex-start;
 }
 
+
+/* PROFILE */
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.container {
+  text-align: left;
+}

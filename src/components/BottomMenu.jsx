@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import Minigames from "./svg/Minigames";
 import More from "./svg/More";
 import Profile from "./svg/Profile";
@@ -7,9 +8,9 @@ import Walk from "./svg/Walk";
 function BottomMenu() {
   return (
     <div className="menu bottom-menu">
-      <button>
+      <NavLink to="/profile">
         <Profile />
-      </button>
+      </NavLink>
       <button>
         <Walk />
       </button>

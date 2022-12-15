@@ -3,10 +3,10 @@ import { NavLink } from "react-router-dom";
 
 function Feed() {
   return (
-    <div className="feed-window">
+    <div className="feed-window window">
       <div className="feed-options">
-        <button className="opacity-hover">MEAL</button>
-        <button className="opacity-hover">CANDY</button>
+        <NavLink className="opacity-hover" to="/eating-meal">MEAL</NavLink>
+        <NavLink className="opacity-hover" to="/candy">CANDY</NavLink>
       </div>
       <div className="close-window">
         <NavLink className="opacity-hover" to="/">
