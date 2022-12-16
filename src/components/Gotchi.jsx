@@ -4,7 +4,7 @@ function Gotchi() {
     
   return (
     <div className="gotchi-container">
-      <img className="gif" src={process.env.PUBLIC_URL + "/gotchi/gotchi.gif"} />
+      <img className="gif gotchi" src={process.env.PUBLIC_URL + "/gotchi/gotchi.gif"} />
     </div>
   );
 }

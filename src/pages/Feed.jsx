@@ -1,12 +1,19 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
-function Feed() {
+function Feed({hunger, setHunger, happiness, setHappiness}) {
+  const navigate = useNavigate();
+
+  const handleMeal = () => {
+    setHunger(hunger + 1)
+    navigate("/eating-meal");
+  }
+
   return (
     <div className="feed-window window">
       <div className="feed-options">
-        <NavLink className="opacity-hover" to="/eating-meal">MEAL</NavLink>
-        <NavLink className="opacity-hover" to="/candy">CANDY</NavLink>
+        <button className="opacity-hover" onClick={handleMeal}>MEAL</button>
+        <button className="opacity-hover" >CANDY</button>
       </div>
       <div className="close-window">
         <NavLink className="opacity-hover" to="/">

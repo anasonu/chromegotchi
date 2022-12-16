@@ -7,14 +7,14 @@ function Candy() {
     useEffect(() => {
       setTimeout(() => {
         navigate("/")
-      }, 5000);
+      }, 6000);
     });
   
     return (
       <div className="gotchi-container">
         <img
           className="gif"
-          src={process.env.PUBLIC_URL + "/gotchi/eating-gotchi.gif"}
+          src={process.env.PUBLIC_URL + "/gotchi/ice-cream.gif"}
         />
       </div>
     );
