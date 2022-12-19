@@ -1,18 +1,9 @@
-import React, { useState } from "react";
+/*global chrome*/
 import { NavLink } from "react-router-dom";
 import getHearts from "../utils/getHearts";
 
 
 function Profile({happiness, hunger}) {
-  // const [hunger, setHunger] = useState([]);
-  // const [happiness, setHappiness] = useState([]);
-  
-  // const currentHungry = 0;
-  // const currentHappiness = 2;
-
-  // let happinessHearts = getHearts(currentHappiness); 
-  // let hungryHearts = getHearts(currentHungry); 
-
   let happinessHearts = getHearts(happiness); 
   let hungryHearts = getHearts(hunger); 
 
@@ -24,7 +15,7 @@ function Profile({happiness, hunger}) {
           { happinessHearts }
         </div>
         <div className="hungy-container container">
-          <p>Hungry</p>
+          <p>Hunger</p>
           { hungryHearts }
         </div>
       </div>

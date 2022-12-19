@@ -8,7 +8,7 @@
     "48": "icon48.ico",
    "128": "icon128.ico"
   },
-  "permissions": ["storage"],
+  "permissions": ["storage", "unlimitedStorage"],
   "version": "1.0.0",
   "action": {
     "default_popup": "index.html",

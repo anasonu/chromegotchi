@@ -1,4 +1,5 @@
-import { useState } from "react";
+/*global chrome*/
+import { useEffect, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import BottomMenu from "./components/BottomMenu";
@@ -10,8 +11,8 @@ import Meal from "./pages/Meal";
 import Profile from "./pages/Profile";
 
 function App() {
-  const [hunger, setHunger] = useState(0);
-  const [happiness, setHappiness] = useState(0);
+  const [hunger, setHunger] = useState(JSON.parse(localStorage.getItem('hunger')) || 0);
+  const [happiness, setHappiness] = useState(JSON.parse(localStorage.getItem('happiness')) || 0);
 
   return (
     <div className="App">
@@ -21,13 +22,26 @@ function App() {
         <Routes>
           <Route path="/index.html" element={<Navigate to="/" />} />
           <Route path="/" element={<Gotchi />} />
-          <Route path="/feed" element={<Feed hunger={hunger} setHunger={setHunger} happiness={happiness} setHappiness={setHappiness} />} />
+          <Route
+            path="/feed"
+            element={
+              <Feed
+                hunger={hunger}
+                setHunger={setHunger}
+                happiness={happiness}
+                setHappiness={setHappiness}
+              />
+            }
+          />
           <Route path="/eating-meal" element={<Meal />} />
           <Route path="/candy" element={<Candy />} />
-          <Route path="/profile" element={<Profile happiness={happiness} hunger={hunger} />} />
+          <Route
+            path="/profile"
+            element={<Profile happiness={happiness} hunger={hunger} />}
+          />
         </Routes>
       </div>
-      
+
       <BottomMenu />
     </div>
   );
