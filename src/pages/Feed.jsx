@@ -7,9 +7,12 @@ function Feed({ hunger, setHunger, happiness, setHappiness }) {
 
   const handleMeal = () => {
     hunger++;
-    setHunger(hunger)
-    localStorage.setItem('hunger', JSON.stringify(hunger));
-    navigate("/eating-meal");
+    setHunger(hunger);
+    // navigate("/eating-meal");
+    // localStorage.setItem("hunger", JSON.stringify(hunger));
+    chrome.storage.local.set({ hunger }).then(() => {
+      navigate("/eating-meal");
+    });
   };
 
   return (
