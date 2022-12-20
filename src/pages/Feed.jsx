@@ -6,13 +6,15 @@ function Feed({ hunger, setHunger, happiness, setHappiness }) {
   const navigate = useNavigate();
 
   const handleMeal = () => {
-    hunger++;
-    setHunger(hunger);
-    // navigate("/eating-meal");
-    // localStorage.setItem("hunger", JSON.stringify(hunger));
-    chrome.storage.local.set({ hunger }).then(() => {
-      navigate("/eating-meal");
-    });
+    if(hunger < 5) {
+      hunger++;
+      setHunger(hunger);
+      // navigate("/eating-meal");
+      // localStorage.setItem("hunger", JSON.stringify(hunger));
+      chrome.storage.local.set({ hunger }).then(() => {
+        navigate("/eating-meal");
+      });
+    }
   };
 
   return (

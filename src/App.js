@@ -12,19 +12,19 @@ import Profile from "./pages/Profile";
 
 function App() {
   // const [hunger, setHunger] = useState(JSON.parse(localStorage.getItem('hunger')) || 0);
-  
+
   const [hunger, setHunger] = useState(0);
-  const [happiness, setHappiness] = useState(JSON.parse(localStorage.getItem('happiness')) || 0);
-  
+  const [happiness, setHappiness] = useState(
+    JSON.parse(localStorage.getItem("happiness")) || 0
+  );
+
   useEffect(() => {
     chrome.storage.local.get(["hunger"]).then((result) => {
-      console.log(result.hunger);
-      if(result.hunger) {
+      if (result.hunger) {
         setHunger(result.hunger);
       }
     });
-  }, [hunger])
-  
+  }, [hunger]);
 
   return (
     <div className="App">

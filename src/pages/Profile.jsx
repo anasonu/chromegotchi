@@ -1,4 +1,3 @@
-/*global chrome*/
 import { NavLink } from "react-router-dom";
 import getHearts from "../utils/getHearts";
 

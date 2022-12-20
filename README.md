@@ -1,70 +1,39 @@
-# Getting Started with Create React App
+# ChromeGotchi
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+ChromeGotchi is a virtual pet inserted in a Chrome Extension. The purpose of this project is to feed and make your ChromeGotchi a happy pet.
 
-## Available Scripts
+## Main Functionalities
 
-In the project directory, you can run:
+**Feed**
 
-### `npm start`
+There are two different options to feed your ChromeGotchi: Meal and Sweet.
+The meal will make it feel sated and will fill one heart of hunger.
+Eating sweets will help it feel happier.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+**Bath**
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Clean your ChromeGotchi when it poops.
 
-### `npm test`
+**Light**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Turn the lights off when you want your pet to sleep and turn them back on for waking up.
 
-### `npm run build`
+**Medicine**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Take care of it when sick.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+**Profile**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Check your pet's hunger and happiness levels.
 
-### `npm run eject`
+**Walk**
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Take your ChromeGotchi for a walk through your website navigation.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**Minigame**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Play with your pet to make it happy.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+**More options**
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Connect with other ChromeGotchis.
