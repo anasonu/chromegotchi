@@ -9,11 +9,17 @@ function Feed({ hunger, setHunger, happiness, setHappiness }) {
     if(hunger < 5) {
       hunger++;
       setHunger(hunger);
-      // navigate("/eating-meal");
-      // localStorage.setItem("hunger", JSON.stringify(hunger));
-      chrome.storage.local.set({ hunger }).then(() => {
-        navigate("/eating-meal");
-      });
+
+      // LocalStorage => Uncomment for localStorage
+      navigate("/eating-meal");
+      localStorage.setItem("hunger", JSON.stringify(hunger));
+
+      // ChromeStorage => Uncomment for chromeStorage
+      // chrome.storage.local.set({ hunger }).then(() => {
+      //   navigate("/eating-meal");
+      // });
+    } else if (hunger === 5) {
+      navigate("/deny");
     }
   };
 
