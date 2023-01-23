@@ -6,19 +6,19 @@ function Feed({ hunger, setHunger, happiness, setHappiness }) {
   const navigate = useNavigate();
 
   const handleMeal = () => {
-    if(hunger < 5) {
+    if (hunger < 5) {
       hunger++;
       setHunger(hunger);
 
-      // LocalStorage => Uncomment for localStorage
-      navigate("/eating-meal");
-      localStorage.setItem("hunger", JSON.stringify(hunger));
-
-      // ChromeStorage => Uncomment for chromeStorage
-      // chrome.storage.local.set({ hunger }).then(() => {
-      //   navigate("/eating-meal");
-      // });
-    } else if (hunger === 5) {
+      if (process.env.NODE_ENV === "development") {
+        navigate("/eating-meal");
+        localStorage.setItem("hunger", JSON.stringify(hunger));
+      } else {
+        chrome.storage.local.set({ hunger }).then(() => {
+          navigate("/eating-meal");
+        });
+      }
+    } else if (hunger >= 5) {
       navigate("/deny");
     }
   };

@@ -12,23 +12,20 @@ import Meal from "./pages/Meal";
 import Profile from "./pages/Profile";
 
 function App() {
-  // LocalStorage => Uncomment for localStorage
-  const [hunger, setHunger] = useState(
-    JSON.parse(localStorage.getItem("hunger")) || 0
-  );
-  const [happiness, setHappiness] = useState(
-    JSON.parse(localStorage.getItem("happiness")) || 0
-  );
+  const [hunger, setHunger] = useState(0);
+  const [happiness, setHappiness] = useState(0);
 
-  // ChromeStorage => Uncomment for ChromeStorage
-  // const [hunger, setHunger] = useState(0);
-  // useEffect(() => {
-  //   chrome.storage.local.get(["hunger"]).then((result) => {
-  //     if (result.hunger) {
-  //       setHunger(result.hunger);
-  //     }
-  //   });
-  // }, [hunger]);
+  useEffect(() => {
+    if (process.env.NODE_ENV === "development") {
+      setHunger(JSON.parse(localStorage.getItem("hunger")));
+    } else {
+      chrome.storage.local.get(["hunger"]).then((result) => {
+      if (result.hunger) {
+          setHunger(result.hunger);
+        }
+      });
+    }
+  }, [hunger]);
 
   return (
     <div className="App">
