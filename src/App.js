@@ -14,18 +14,49 @@ import Profile from "./pages/Profile";
 function App() {
   const [hunger, setHunger] = useState(0);
   const [happiness, setHappiness] = useState(0);
+  let lastFeeded;
 
   useEffect(() => {
     if (process.env.NODE_ENV === "development") {
       setHunger(JSON.parse(localStorage.getItem("hunger")));
     } else {
       chrome.storage.local.get(["hunger"]).then((result) => {
-      if (result.hunger) {
+        if (result.hunger) {
           setHunger(result.hunger);
         }
       });
     }
   }, [hunger]);
+
+  useEffect(() => {
+    const now = new Date();
+    if (process.env.NODE_ENV === "development") {
+      const date =
+        localStorage.getItem("lastFeeded") &&
+        JSON.parse(localStorage.getItem("lastFeeded"));
+      if (Date.parse(now) - date >= 60000 && hunger > 0) {
+        localStorage.setItem("hunger", hunger - 1);
+        setHunger(hunger - 1);
+      }
+    } else {
+      chrome.storage.local.get(["lastFeeded"]).then((result) => {
+        const date = result.lastFeeded;
+
+        // console.log(date)
+        // console.log(Date.parse(now))
+        // console.log(Date.parse(now) - date)
+        // console.log("=====", Date.parse(now) - date >= 60000, "=====")
+        // console.log("=====", Date.parse(now) - date, "=====")
+
+        if (Date.parse(now) - date >= 60000 && hunger > 0) {
+          chrome.storage.local.set({ hunger: hunger - 1 }).then(() => {
+            console.log("Hola")
+            setHunger(hunger - 1);
+          });
+        }
+      });
+    }
+  }, []);
 
   return (
     <div className="App">
@@ -43,6 +74,7 @@ function App() {
                 setHunger={setHunger}
                 happiness={happiness}
                 setHappiness={setHappiness}
+                lastFeeded={lastFeeded}
               />
             }
           />
