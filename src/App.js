@@ -8,41 +8,48 @@ import TopMenu from "./components/TopMenu";
 import Candy from "./pages/Candy";
 import Deny from "./pages/Deny";
 import Feed from "./pages/Feed";
+import Happy from "./pages/Happy";
 import Meal from "./pages/Meal";
 import Profile from "./pages/Profile";
-// import { getCurrentHunger } from "./utils/getStorage";
 
 function App() {
   const [hunger, setHunger] = useState(0);
   const [happiness, setHappiness] = useState(0);
   const [lastFeeded, setLastFeeded] = useState(null);
+  const [lastCuddle, setLastCuddle] = useState(null);
 
   useEffect(() => {
     const now = Date.parse(new Date());
 
-    // Get hunger and lastFeeded time from storage
-    chrome.storage.local.get(["hunger", "lastFeeded"]).then((result) => {
-      const date = result.lastFeeded;
+    // Get hunger, happiness and lastFeeded time from storage
+    chrome.storage.local
+      .get(["hunger", "happiness", "lastFeeded", "lastCuddle"])
+      .then((result) => {
+        const feedDate = result.lastFeeded;
+        const cuddleDate = result.lastCuddle;
 
-      if (result.hunger) {
-        setHunger(result.hunger);
-      }
-      if (result.lastFeeded) {
-        setLastFeeded(date);
-      }
+        if (result.hunger) {
+          setHunger(result.hunger);
+        }
+        if (result.happiness) {
+          setHappiness(result.happiness);
+        }
+        if (result.lastFeeded) {
+          setLastFeeded(feedDate);
+        }
 
-      // Substract a heart after specific time.
-      if (now - date >= 3600000 && result.hunger > 0) {
-        const time = Math.floor((now - date) / 3600000);
-        const substractedHunger = result.hunger - time;
-        chrome.storage.local.set({ hunger: substractedHunger }).then(() => {
-          setHunger(substractedHunger);
-        });
-        chrome.storage.local.set({ lastFeeded: now }).then(() => {
-          setLastFeeded(now);
-        });
-      }
-    });
+        // Substract hunger hearts after specific time.
+        if (now - feedDate >= 3600000 && result.hunger > 0) {
+          const time = Math.floor((now - feedDate) / 3600000);
+          const substractedHunger = result.hunger - time;
+          chrome.storage.local.set({ hunger: substractedHunger }).then(() => {
+            setHunger(substractedHunger);
+          });
+          chrome.storage.local.set({ lastFeeded: now }).then(() => {
+            setLastFeeded(now);
+          });
+        }
+      });
   }, []);
 
   return (
@@ -52,7 +59,17 @@ function App() {
       <div className="main-screen">
         <Routes>
           <Route path="/index.html" element={<Navigate to="/" />} />
-          <Route path="/" element={<Gotchi />} />
+          <Route
+            path="/"
+            element={
+              <Gotchi
+                happiness={happiness}
+                setHappiness={setHappiness}
+                lastCuddle={lastCuddle}
+                setLastCuddle={setLastCuddle}
+              />
+            }
+          />
           <Route
             path="/feed"
             element={
@@ -73,6 +90,7 @@ function App() {
             element={<Profile happiness={happiness} hunger={hunger} />}
           />
           <Route path="/deny" element={<Deny />} />
+          <Route path="/happy" element={<Happy />} />
         </Routes>
       </div>
 

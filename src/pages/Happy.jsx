@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Deny() {
+function Happy() {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,11 +14,11 @@ function Deny() {
     <div className="gotchi-container">
       <img
         className="gif"
-        alt="Denying animation"
-        src={process.env.PUBLIC_URL + "/gotchi/denying.gif"}
+        alt="Happy Gotchi"
+        src={process.env.PUBLIC_URL + "/gotchi/happyGotchi.gif"}
       />
     </div>
   );
 }
 
-export default Deny;
+export default Happy;

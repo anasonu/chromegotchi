@@ -14,6 +14,7 @@ function Meal() {
     <div className="gotchi-container">
       <img
         className="gif"
+        alt="Eating chicken"
         src={process.env.PUBLIC_URL + "/gotchi/chicken.gif"}
       />
     </div>

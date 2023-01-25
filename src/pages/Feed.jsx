@@ -14,7 +14,6 @@ function Feed({ hunger, setHunger, happiness, setHappiness, lastFeeded, setLastF
 
       chrome.storage.local.set({ hunger, lastFeeded: justFeeded }).then((result) => {
         navigate("/eating-meal");
-        console.log("lastFeeded in chromestorage:", result.lastFeeded)
       })
 
     } else if (hunger >= 5) {
