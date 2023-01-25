@@ -37,11 +37,18 @@ function App() {
         if (result.lastFeeded) {
           setLastFeeded(feedDate);
         }
+        if (result.lastCuddle) {
+          setLastCuddle(cuddleDate);
+        }
 
         // Substract hunger hearts after specific time.
         if (now - feedDate >= 3600000 && result.hunger > 0) {
           const time = Math.floor((now - feedDate) / 3600000);
-          const substractedHunger = result.hunger - time;
+          let substractedHunger = result.hunger - time;
+
+          if(substractedHunger < 0) {
+            substractedHunger = 0;
+          }
 
           chrome.storage.local.set({ hunger: substractedHunger }).then(() => {
             setHunger(substractedHunger);
@@ -54,7 +61,11 @@ function App() {
         // Substract happiness hearts after specific time.
         if(now - cuddleDate >= 1800000 && result.happiness > 0) {
           const time = Math.floor((now - cuddleDate) / 1800000);
-          const substractHappiness = result.happiness - time;
+          let substractHappiness = result.happiness - time;
+
+          if(substractHappiness < 0) {
+            substractHappiness = 0;
+          }
 
           chrome.storage.local.set({ happiness: substractHappiness }).then(() => {
             setHappiness(substractHappiness);
