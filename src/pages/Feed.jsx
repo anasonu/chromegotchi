@@ -2,31 +2,23 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
-function Feed({ hunger, setHunger, happiness, setHappiness, lastFeeded }) {
+function Feed({ hunger, setHunger, happiness, setHappiness, lastFeeded, setLastFeeded }) {
   const navigate = useNavigate();
 
   const handleMeal = () => {
     if (hunger < 5) {
       hunger++;
       setHunger(hunger);
-      lastFeeded = Date.parse(new Date());
+      const justFeeded = Date.parse(new Date());
+      setLastFeeded(justFeeded);
 
-      if (process.env.NODE_ENV === "development") {
+      chrome.storage.local.set({ hunger, lastFeeded: justFeeded }).then((result) => {
         navigate("/eating-meal");
-        localStorage.setItem("hunger", JSON.stringify(hunger));
-        localStorage.setItem("lastFeeded", JSON.stringify(lastFeeded));
-      } else {
-        chrome.storage.local.set({ hunger, lastFeeded }).then(() => {
-          navigate("/eating-meal");
-        });
-      }
+        console.log("lastFeeded in chromestorage:", result.lastFeeded)
+      })
+
     } else if (hunger >= 5) {
-      // navigate("/deny");
-      hunger = 0;
-      setHunger(hunger)
-      chrome.storage.local.set({ hunger }).then(() => {
-        navigate("/deny");
-      });
+      navigate("/deny");
     }
   };
 

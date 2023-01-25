@@ -10,52 +10,39 @@ import Deny from "./pages/Deny";
 import Feed from "./pages/Feed";
 import Meal from "./pages/Meal";
 import Profile from "./pages/Profile";
+// import { getCurrentHunger } from "./utils/getStorage";
 
 function App() {
   const [hunger, setHunger] = useState(0);
   const [happiness, setHappiness] = useState(0);
-  let lastFeeded;
+  const [lastFeeded, setLastFeeded] = useState(null);
 
   useEffect(() => {
-    if (process.env.NODE_ENV === "development") {
-      setHunger(JSON.parse(localStorage.getItem("hunger")));
-    } else {
-      chrome.storage.local.get(["hunger"]).then((result) => {
-        if (result.hunger) {
-          setHunger(result.hunger);
-        }
-      });
-    }
-  }, [hunger]);
+    const now = Date.parse(new Date());
 
-  useEffect(() => {
-    const now = new Date();
-    if (process.env.NODE_ENV === "development") {
-      const date =
-        localStorage.getItem("lastFeeded") &&
-        JSON.parse(localStorage.getItem("lastFeeded"));
-      if (Date.parse(now) - date >= 60000 && hunger > 0) {
-        localStorage.setItem("hunger", hunger - 1);
-        setHunger(hunger - 1);
+    // Get hunger and lastFeeded time from storage
+    chrome.storage.local.get(["hunger", "lastFeeded"]).then((result) => {
+      const date = result.lastFeeded;
+
+      if (result.hunger) {
+        setHunger(result.hunger);
       }
-    } else {
-      chrome.storage.local.get(["lastFeeded"]).then((result) => {
-        const date = result.lastFeeded;
+      if (result.lastFeeded) {
+        setLastFeeded(date);
+      }
 
-        // console.log(date)
-        // console.log(Date.parse(now))
-        // console.log(Date.parse(now) - date)
-        // console.log("=====", Date.parse(now) - date >= 60000, "=====")
-        // console.log("=====", Date.parse(now) - date, "=====")
-
-        if (Date.parse(now) - date >= 60000 && hunger > 0) {
-          chrome.storage.local.set({ hunger: hunger - 1 }).then(() => {
-            console.log("Hola")
-            setHunger(hunger - 1);
-          });
-        }
-      });
-    }
+      // Substract a heart after specific time.
+      if (now - date >= 3600000 && result.hunger > 0) {
+        const time = Math.floor((now - date) / 3600000);
+        const substractedHunger = result.hunger - time;
+        chrome.storage.local.set({ hunger: substractedHunger }).then(() => {
+          setHunger(substractedHunger);
+        });
+        chrome.storage.local.set({ lastFeeded: now }).then(() => {
+          setLastFeeded(now);
+        });
+      }
+    });
   }, []);
 
   return (
@@ -75,6 +62,7 @@ function App() {
                 happiness={happiness}
                 setHappiness={setHappiness}
                 lastFeeded={lastFeeded}
+                setLastFeeded={setLastFeeded}
               />
             }
           />
