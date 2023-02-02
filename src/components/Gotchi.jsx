@@ -2,10 +2,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-function Gotchi({ happiness, setHappiness, lastCuddle, setLastCuddle }) {
+function Gotchi({ happiness, setHappiness, setLastCuddle, hasPoop }) {
   const navigate = useNavigate();
+  // const [hasPoop, setHasPoop] = useState(false);
 
   const handleClick = () => {
+
     if (happiness < 5) {
       happiness++;
       setHappiness(happiness);
@@ -22,6 +24,7 @@ function Gotchi({ happiness, setHappiness, lastCuddle, setLastCuddle }) {
 
   return (
     <div className="gotchi-container">
+    { hasPoop && <img className="gif gotchi" alt="Poop" src={process.env.PUBLIC_URL + "/gotchi/poop.gif"} /> }
       <button onClick={handleClick}>
         <img
           className="gif gotchi"

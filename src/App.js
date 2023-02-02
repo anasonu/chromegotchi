@@ -17,6 +17,7 @@ function App() {
   const [happiness, setHappiness] = useState(0);
   const [lastFeeded, setLastFeeded] = useState(null);
   const [lastCuddle, setLastCuddle] = useState(null);
+  const [hasPoop, setHasPoop] = useState(false);
 
   useEffect(() => {
     const now = Date.parse(new Date());
@@ -43,10 +44,11 @@ function App() {
 
         // Substract hunger hearts after specific time.
         if (now - feedDate >= 3600000 && result.hunger > 0) {
+          setHasPoop(true); // Adds one poop when a hunger heart is substracted
           const time = Math.floor((now - feedDate) / 3600000);
           let substractedHunger = result.hunger - time;
 
-          if(substractedHunger < 0) {
+          if (substractedHunger < 0) {
             substractedHunger = 0;
           }
 
@@ -59,17 +61,19 @@ function App() {
         }
 
         // Substract happiness hearts after specific time.
-        if(now - cuddleDate >= 1800000 && result.happiness > 0) {
+        if (now - cuddleDate >= 1800000 && result.happiness > 0) {
           const time = Math.floor((now - cuddleDate) / 1800000);
           let substractHappiness = result.happiness - time;
 
-          if(substractHappiness < 0) {
+          if (substractHappiness < 0) {
             substractHappiness = 0;
           }
 
-          chrome.storage.local.set({ happiness: substractHappiness }).then(() => {
-            setHappiness(substractHappiness);
-          });
+          chrome.storage.local
+            .set({ happiness: substractHappiness })
+            .then(() => {
+              setHappiness(substractHappiness);
+            });
           chrome.storage.local.set({ lastCuddle: now }).then(() => {
             setLastCuddle(now);
           });
@@ -92,6 +96,7 @@ function App() {
                 setHappiness={setHappiness}
                 lastCuddle={lastCuddle}
                 setLastCuddle={setLastCuddle}
+                hasPoop={hasPoop}
               />
             }
           />

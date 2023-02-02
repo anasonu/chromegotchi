@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom";
 import getHearts from "../utils/getHearts";
 
-
 function Profile({happiness, hunger}) {
   let happinessHearts = getHearts(happiness); 
   let hungryHearts = getHearts(hunger); 

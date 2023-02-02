@@ -2,7 +2,7 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
-function Feed({ hunger, setHunger, happiness, setHappiness, lastFeeded, setLastFeeded }) {
+function Feed({ hunger, setHunger, setLastFeeded }) {
   const navigate = useNavigate();
 
   const handleMeal = () => {
