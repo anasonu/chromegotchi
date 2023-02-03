@@ -24,28 +24,24 @@ function App() {
 
     // Get hunger, happiness and lastFeeded time from storage
     chrome.storage.local
-      .get(["hunger", "happiness", "lastFeeded", "lastCuddle"])
+      .get(["hunger", "happiness", "lastFeeded", "lastCuddle", "hasPoop"])
       .then((result) => {
-        const feedDate = result.lastFeeded;
-        const cuddleDate = result.lastCuddle;
+        const {lastFeeded, lastCuddle, hunger, happiness, hasPoop} = result;
 
-        if (result.hunger) {
-          setHunger(result.hunger);
-        }
-        if (result.happiness) {
-          setHappiness(result.happiness);
-        }
-        if (result.lastFeeded) {
-          setLastFeeded(feedDate);
-        }
-        if (result.lastCuddle) {
-          setLastCuddle(cuddleDate);
-        }
+        hunger && setHunger(hunger);
+        happiness && setHappiness(happiness);
+        lastFeeded && setLastFeeded(lastFeeded);
+        lastCuddle && setLastCuddle(lastCuddle);
+        hasPoop && setHasPoop(hasPoop);
 
         // Substract hunger hearts after specific time.
-        if (now - feedDate >= 3600000 && result.hunger > 0) {
-          setHasPoop(true); // Adds one poop when a hunger heart is substracted
-          const time = Math.floor((now - feedDate) / 3600000);
+        if (now - lastFeeded >= 3600000 && result.hunger > 0) {
+          // Adds one poop when a hunger heart is substracted
+          chrome.storage.local.set({ hasPoop: true }).then(() => {
+            setHasPoop(true); 
+          });
+
+          const time = Math.floor((now - lastFeeded) / 3600000);
           let substractedHunger = result.hunger - time;
 
           if (substractedHunger < 0) {
@@ -61,8 +57,8 @@ function App() {
         }
 
         // Substract happiness hearts after specific time.
-        if (now - cuddleDate >= 1800000 && result.happiness > 0) {
-          const time = Math.floor((now - cuddleDate) / 1800000);
+        if (now - lastCuddle >= 1800000 && result.happiness > 0) {
+          const time = Math.floor((now - lastCuddle) / 1800000);
           let substractHappiness = result.happiness - time;
 
           if (substractHappiness < 0) {
@@ -83,7 +79,7 @@ function App() {
 
   return (
     <div className="App">
-      <TopMenu className="top-menu menu" />
+      <TopMenu className="top-menu menu" setHasPoop={setHasPoop} />
 
       <div className="main-screen">
         <Routes>

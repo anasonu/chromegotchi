@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 function Gotchi({ happiness, setHappiness, setLastCuddle, hasPoop }) {
   const navigate = useNavigate();
-  // const [hasPoop, setHasPoop] = useState(false);
 
   const handleClick = () => {
 
