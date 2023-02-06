@@ -14,19 +14,20 @@ import Profile from "./pages/Profile";
 
 function App() {
   const [hunger, setHunger] = useState(0);
-  const [happiness, setHappiness] = useState(0);
   const [lastFeeded, setLastFeeded] = useState(null);
+  const [happiness, setHappiness] = useState(0);
   const [lastCuddle, setLastCuddle] = useState(null);
   const [hasPoop, setHasPoop] = useState(false);
+  const [lastPoop, setLastPoop] = useState(null);
 
   useEffect(() => {
     const now = Date.parse(new Date());
 
     // Get hunger, happiness and lastFeeded time from storage
     chrome.storage.local
-      .get(["hunger", "happiness", "lastFeeded", "lastCuddle", "hasPoop"])
+      .get(["hunger", "happiness", "lastFeeded", "lastCuddle", "hasPoop", "lastPoop"])
       .then((result) => {
-        const {lastFeeded, lastCuddle, hunger, happiness, hasPoop} = result;
+        const { lastFeeded, lastCuddle, hunger, happiness, hasPoop, lastPoop } = result;
 
         hunger && setHunger(hunger);
         happiness && setHappiness(happiness);
@@ -34,52 +35,64 @@ function App() {
         lastCuddle && setLastCuddle(lastCuddle);
         hasPoop && setHasPoop(hasPoop);
 
-        // Substract hunger hearts after specific time.
-        if (now - lastFeeded >= 3600000 && result.hunger > 0) {
-          // Adds one poop when a hunger heart is substracted
-          chrome.storage.local.set({ hasPoop: true }).then(() => {
-            setHasPoop(true); 
+        // Adds poop every 1h 15min
+        if(typeof lastPoop === "undefined") {
+          chrome.storage.local.set({ lastPoop: now }).then(() => {
+            setLastPoop(now);
           });
+        }
 
-          const time = Math.floor((now - lastFeeded) / 3600000);
-          let substractedHunger = result.hunger - time;
+        if(!hasPoop && now - lastPoop >= 4500000) {
+          chrome.storage.local.set({ hasPoop: true }).then(() => {
+            setHasPoop(true);
+          });
+        }
+
+        // Substract hunger hearts after specific time (1h).
+        if (now - lastFeeded >= 3600000 && hunger > 0) {
+          const time = Math.floor((now - lastFeeded) / 3600000); //Converted to hours
+          let substractedHunger = hunger - time;
 
           if (substractedHunger < 0) {
             substractedHunger = 0;
           }
 
-          chrome.storage.local.set({ hunger: substractedHunger }).then(() => {
-            setHunger(substractedHunger);
-          });
-          chrome.storage.local.set({ lastFeeded: now }).then(() => {
-            setLastFeeded(now);
-          });
+          chrome.storage.local
+            .set({ hunger: substractedHunger, lastFeeded: now })
+            .then(() => {
+              setHunger(substractedHunger);
+              setLastFeeded(now);
+            });
         }
 
-        // Substract happiness hearts after specific time.
-        if (now - lastCuddle >= 1800000 && result.happiness > 0) {
+        // Substract happiness hearts after specific time (1/2h).
+        if (now - lastCuddle >= 1800000 && happiness > 0) {
           const time = Math.floor((now - lastCuddle) / 1800000);
-          let substractHappiness = result.happiness - time;
+          let substractHappiness = happiness - time;
 
           if (substractHappiness < 0) {
             substractHappiness = 0;
           }
 
           chrome.storage.local
-            .set({ happiness: substractHappiness })
+            .set({ happiness: substractHappiness, lastCuddle: now })
             .then(() => {
               setHappiness(substractHappiness);
+              setLastCuddle(now);
             });
-          chrome.storage.local.set({ lastCuddle: now }).then(() => {
-            setLastCuddle(now);
-          });
         }
       });
   }, []);
 
   return (
     <div className="App">
-      <TopMenu className="top-menu menu" setHasPoop={setHasPoop} />
+      <TopMenu
+        className="top-menu menu"
+        hasPoop={hasPoop}
+        setHasPoop={setHasPoop}
+        lastPoop={lastPoop}
+        setLastPoop={setLastPoop}
+      />
 
       <div className="main-screen">
         <Routes>

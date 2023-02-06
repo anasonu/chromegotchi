@@ -12,7 +12,7 @@ function Feed({ hunger, setHunger, setLastFeeded }) {
       const justFeeded = Date.parse(new Date());
       setLastFeeded(justFeeded);
 
-      chrome.storage.local.set({ hunger, lastFeeded: justFeeded }).then((result) => {
+      chrome.storage.local.set({ hunger, lastFeeded: justFeeded }).then(() => {
         navigate("/eating-meal");
       })
 
