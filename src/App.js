@@ -5,6 +5,7 @@ import "./App.css";
 import BottomMenu from "./components/BottomMenu";
 import Gotchi from "./components/Gotchi";
 import TopMenu from "./components/TopMenu";
+import Bathroom from "./pages/Bathroom";
 import Candy from "./pages/Candy";
 import Deny from "./pages/Deny";
 import Feed from "./pages/Feed";
@@ -35,14 +36,14 @@ function App() {
         lastCuddle && setLastCuddle(lastCuddle);
         hasPoop && setHasPoop(hasPoop);
 
-        // Adds poop every 1h 15min
+        // Adds poop every 1h 10min
         if(typeof lastPoop === "undefined") {
           chrome.storage.local.set({ lastPoop: now }).then(() => {
             setLastPoop(now);
           });
         }
 
-        if(!hasPoop && now - lastPoop >= 4500000) {
+        if(!hasPoop && now - lastPoop >= 4200000) {
           chrome.storage.local.set({ hasPoop: true }).then(() => {
             setHasPoop(true);
           });
@@ -124,6 +125,7 @@ function App() {
           />
           <Route path="/eating-meal" element={<Meal />} />
           <Route path="/candy" element={<Candy />} />
+          <Route path="/bathroom" element={ <Bathroom /> } />
           <Route
             path="/profile"
             element={<Profile happiness={happiness} hunger={hunger} />}

@@ -30,6 +30,10 @@ p {
   cursor: pointer;
 }
 
+.bathroom-gif {
+  height: 60px;
+}
+
 .gotchi-container {
   display: flex;
   justify-content: center;
