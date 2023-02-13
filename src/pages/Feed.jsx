@@ -2,7 +2,7 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
-function Feed({ hunger, setHunger, setLastFeeded }) {
+function Feed({ hunger, setHunger, setLastFeeded, happiness, setHappiness }) {
   const navigate = useNavigate();
 
   const handleMeal = () => {
@@ -14,9 +14,27 @@ function Feed({ hunger, setHunger, setLastFeeded }) {
 
       chrome.storage.local.set({ hunger, lastFeeded: justFeeded }).then(() => {
         navigate("/eating-meal");
-      })
-
+      });
     } else if (hunger >= 5) {
+      navigate("/deny");
+    }
+  };
+
+  const handleCandy = () => {
+    if (hunger < 5 && happiness < 5) {
+      hunger++;
+      happiness < 4 ? (happiness += 2) : happiness++;
+      setHunger(hunger);
+      setHappiness(happiness);
+      const justFeeded = Date.parse(new Date());
+      setLastFeeded(justFeeded);
+
+      chrome.storage.local
+        .set({ hunger, happiness, lastFeeded: justFeeded })
+        .then(() => {
+          navigate("/candy");
+        });
+    } else if (hunger >= 5 || happiness >= 5) {
       navigate("/deny");
     }
   };
@@ -27,7 +45,9 @@ function Feed({ hunger, setHunger, setLastFeeded }) {
         <button className="opacity-hover" onClick={handleMeal}>
           MEAL
         </button>
-        <button className="opacity-hover">CANDY</button>
+        <button className="opacity-hover" onClick={handleCandy}>
+          CANDY
+        </button>
       </div>
       <div className="close-window">
         <NavLink className="opacity-hover" to="/">

@@ -15,6 +15,7 @@ function Candy() {
         <img
           className="gif"
           src={process.env.PUBLIC_URL + "/gotchi/ice-cream.gif"}
+          alt="Chromegotchi eating ice cream"
         />
       </div>
     );
