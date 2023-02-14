@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Silkscreen&display=swap');
 
+:root {
+  --dark-color: #000000;
+  --light-color: #FFFFFF;
+}
+
 .App { 
   text-align: center;
   width: 350px;
@@ -12,7 +17,7 @@
 }
 
 a {
-  color: black;
+  color: var(--dark-color);
   text-decoration: none;
 }
 
@@ -23,6 +28,10 @@ p {
 .main-screen {
   width: 80%;
   margin: 0 auto;
+}
+
+.light-off {
+  background-color: var(--dark-color);
 }
 
 .gif {
@@ -82,6 +91,10 @@ button {
 .window {
   display: flex;
   justify-content: space-between;
+}
+
+.light-color {
+  color: var(--light-color);
 }
 
 .feed-options {

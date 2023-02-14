@@ -6,7 +6,9 @@ import Feed from "./svg/Feed";
 import Light from "./svg/Light";
 import Medicine from "./svg/Medicine";
 
-function TopMenu({ hasPoop, setHasPoop, lastPoop, setLastPoop }) {
+function TopMenu({ hasPoop, setHasPoop, lastPoop, setLastPoop, isLightOn, setIsLightOn }) {
+  // const [isLightOn, setIsLightOn] = useState(true);
+
   const navigate = useNavigate();
 
   const handlePoop = () => {
@@ -23,6 +25,10 @@ function TopMenu({ hasPoop, setHasPoop, lastPoop, setLastPoop }) {
     });
   };
 
+  const handleLight = () => {
+    setIsLightOn(!isLightOn);
+  }
+
   return (
     <nav className="menu top-menu">
       <NavLink to="/feed">
@@ -31,7 +37,7 @@ function TopMenu({ hasPoop, setHasPoop, lastPoop, setLastPoop }) {
       <button onClick={handlePoop}>
         <Bath />
       </button>
-      <button>
+      <button onClick={handleLight}>
         <Light />
       </button>
       <button>

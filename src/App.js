@@ -20,15 +20,24 @@ function App() {
   const [lastCuddle, setLastCuddle] = useState(null);
   const [hasPoop, setHasPoop] = useState(false);
   const [lastPoop, setLastPoop] = useState(null);
+  const [isLightOn, setIsLightOn] = useState(true);
 
   useEffect(() => {
     const now = Date.parse(new Date());
 
     // Get hunger, happiness and lastFeeded time from storage
     chrome.storage.local
-      .get(["hunger", "happiness", "lastFeeded", "lastCuddle", "hasPoop", "lastPoop"])
+      .get([
+        "hunger",
+        "happiness",
+        "lastFeeded",
+        "lastCuddle",
+        "hasPoop",
+        "lastPoop",
+      ])
       .then((result) => {
-        const { lastFeeded, lastCuddle, hunger, happiness, hasPoop, lastPoop } = result;
+        const { lastFeeded, lastCuddle, hunger, happiness, hasPoop, lastPoop } =
+          result;
 
         hunger && setHunger(hunger);
         happiness && setHappiness(happiness);
@@ -37,13 +46,13 @@ function App() {
         hasPoop && setHasPoop(hasPoop);
 
         // Adds poop every 1h 10min
-        if(typeof lastPoop === "undefined") {
+        if (typeof lastPoop === "undefined") {
           chrome.storage.local.set({ lastPoop: now }).then(() => {
             setLastPoop(now);
           });
         }
 
-        if(!hasPoop && now - lastPoop >= 4200000) {
+        if (!hasPoop && now - lastPoop >= 4200000) {
           chrome.storage.local.set({ hasPoop: true }).then(() => {
             setHasPoop(true);
           });
@@ -86,13 +95,15 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <div className={isLightOn ? "App" : "App light-off"}>
       <TopMenu
         className="top-menu menu"
         hasPoop={hasPoop}
         setHasPoop={setHasPoop}
         lastPoop={lastPoop}
         setLastPoop={setLastPoop}
+        isLightOn={isLightOn}
+        setIsLightOn={setIsLightOn}
       />
 
       <div className="main-screen">
@@ -101,13 +112,15 @@ function App() {
           <Route
             path="/"
             element={
-              <Gotchi
-                happiness={happiness}
-                setHappiness={setHappiness}
-                lastCuddle={lastCuddle}
-                setLastCuddle={setLastCuddle}
-                hasPoop={hasPoop}
-              />
+              isLightOn && (
+                <Gotchi
+                  happiness={happiness}
+                  setHappiness={setHappiness}
+                  lastCuddle={lastCuddle}
+                  setLastCuddle={setLastCuddle}
+                  hasPoop={hasPoop}
+                />
+              )
             }
           />
           <Route
@@ -120,12 +133,13 @@ function App() {
                 setHappiness={setHappiness}
                 lastFeeded={lastFeeded}
                 setLastFeeded={setLastFeeded}
+                isLightOn={isLightOn}
               />
             }
           />
           <Route path="/eating-meal" element={<Meal />} />
           <Route path="/candy" element={<Candy />} />
-          <Route path="/bathroom" element={ <Bathroom /> } />
+          <Route path="/bathroom" element={<Bathroom />} />
           <Route
             path="/profile"
             element={<Profile happiness={happiness} hunger={hunger} />}

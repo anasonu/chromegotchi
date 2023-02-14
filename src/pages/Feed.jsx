@@ -2,7 +2,7 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
-function Feed({ hunger, setHunger, setLastFeeded, happiness, setHappiness }) {
+function Feed({ hunger, setHunger, setLastFeeded, happiness, setHappiness, isLightOn }) {
   const navigate = useNavigate();
 
   const handleMeal = () => {
@@ -42,15 +42,15 @@ function Feed({ hunger, setHunger, setLastFeeded, happiness, setHappiness }) {
   return (
     <div className="feed-window window">
       <div className="feed-options">
-        <button className="opacity-hover" onClick={handleMeal}>
+        <button className={isLightOn ? "opacity-hover" : "opacity-hover light-color"} onClick={handleMeal}>
           MEAL
         </button>
-        <button className="opacity-hover" onClick={handleCandy}>
+        <button className={isLightOn ? "opacity-hover" : "opacity-hover light-color"} onClick={handleCandy}>
           CANDY
         </button>
       </div>
       <div className="close-window">
-        <NavLink className="opacity-hover" to="/">
+        <NavLink className={isLightOn ? "opacity-hover" : "opacity-hover light-color"} to="/">
           X
         </NavLink>
       </div>
