@@ -4,14 +4,14 @@
   "name": "Chromegotchi",
   "description": "Virtual pet for you to love ♥️",
   "icons": {
-    "16": "favicon.ico",
-    "48": "icon48.ico",
-   "128": "icon128.ico"
+    "16": "public/favicon.ico",
+    "48": "public/icon48.ico",
+   "128": "public/icon128.ico"
   },
   "permissions": ["storage", "unlimitedStorage"],
   "version": "1.0.0",
   "action": {
-    "default_popup": "index.html",
+    "default_popup": "public/index.html",
     "default_title": "Chromegotchi"
   }
 }
