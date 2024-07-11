@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "Chromegotchi",
+  "short_name": "Chromegotchi",
+  "description": "Virtual pet for you to love ♥️",
+  "version": "1.0.0",
+  "icons": {
+    "16": "favicon.ico",
+    "48": "icon48.ico",
+    "128": "icon128.ico"
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage"
+  ],
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Chromegotchi"
+  }
+}
