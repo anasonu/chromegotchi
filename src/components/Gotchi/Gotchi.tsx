@@ -15,10 +15,6 @@ function Gotchi() {
   };
 
   useEffect(() => {
-    console.log(timerFinished);
-  }, [timerFinished]);
-
-  useEffect(() => {
     initializeData()
 
     const handleStorageChange = (changes: any, areaName: string) => {
