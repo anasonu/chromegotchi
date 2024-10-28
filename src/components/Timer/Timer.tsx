@@ -13,8 +13,14 @@ const Timer: React.FC = () => {
         const now = Date.now();
         const remaining = endTime - now;
         setTimeRemaining(Math.max(remaining, 0));
+
+        if (remaining <= 0) {
+          chrome.storage.local.set({ timerFinished: true });
+        }
       }
     };
+
+    
 
     fetchEggData();
 
@@ -34,9 +40,9 @@ const Timer: React.FC = () => {
     )}`;
   };
 
-    if (timeRemaining !== null && timeRemaining <= 0) {
-      return null;
-    }
+  if (timeRemaining !== null && timeRemaining <= 0) {
+    return null;
+  }
 
   return (
     <>
