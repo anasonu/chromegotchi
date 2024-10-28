@@ -1,0 +1,19 @@
+.gotchi {
+    display: flex;
+    justify-content: center;
+}
+
+.gotchi-0 {
+  height: 40px;
+  width: 40px;
+  background-image: url("/public/egg.png");
+  background-position: 0 0;
+  animation: egg 1s steps(6) infinite alternate;
+  background-size: auto 40px;
+}
+
+@keyframes egg {
+    100% {
+      background-position: -240px 0;
+    }
+  }
