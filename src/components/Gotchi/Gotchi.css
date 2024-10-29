@@ -1,19 +1,48 @@
-.gotchi {
-    display: flex;
-    justify-content: center;
-}
+/* .gotchi {
+  display: flex;
+  justify-content: center;
+} */
 
 .gotchi-0 {
   height: 40px;
   width: 40px;
   background-image: url("/public/egg.png");
   background-position: 0 0;
-  animation: egg 1s steps(6) infinite alternate;
   background-size: auto 40px;
+  animation: egg 1s steps(6) infinite alternate;
 }
 
+.gotchi-1 {
+  height: 64px;
+  width: 40px;
+  background-image: url("/public/baby-sprites.png");
+  /* background-position: 0 0;
+  background-size: auto 40px; */
+  transform: scale(0.6);
+  /* transform-origin: top left; */
+  animation: babyStandard 1s steps(2) infinite alternate;
+}
+
+.gotchi-0.cracking {
+  animation: eggCracking 3s steps(1);
+}
+
+/* ANIMATIONS */
+
 @keyframes egg {
-    100% {
-      background-position: -240px 0;
-    }
+  100% {
+    background-position: -240px 0;
   }
+}
+
+@keyframes eggCracking {
+  0%, 10%, 30%, 50%, 70% { background-position: -80px 0; }
+  20%, 40%, 60% { background-position: 0 0; }
+  80%, 90%, 100% { background-position: -240px 0; }
+}
+
+@keyframes babyStandard {
+  100% {
+    background-position: -80px 0;
+  }
+}

@@ -2,28 +2,54 @@ import { useEffect, useState } from "react";
 import { getFromState, saveInState } from "../../utils/state";
 import { Chromegotchi } from "../../types/Chromegotchi";
 import "./Gotchi.css";
-import { isChromegotchi } from "../../utils/isChromegotchi";
 
 function Gotchi() {
   const [gotchiStatus, setGotchiStatus] = useState<Chromegotchi>();
+  const [timerFinished, setTimerFinished] = useState<boolean>(true);
 
-  const getData = async (key: string) => {
-    const data = await getFromState(key)
-    console.log('data', data)
-    setGotchiStatus(data)
-    return data
-  }
+  const initializeData = async () => {
+    const gotchiData = await getFromState("gotchi");
+    const timerData = await getFromState("timerFinished");
+    setGotchiStatus(gotchiData);
+    setTimerFinished(timerData);
+  };
 
   useEffect(() => {
-    getData('gotchi')
-  }, [])
+    initializeData()
 
-  // useEffect(() => {
-  //   saveInState("gotchi", gotchiStatus);
-  //   console.log('gotchiStatus', gotchiStatus)
-  // }, [gotchiStatus]);
+    const handleStorageChange = (changes: any, areaName: string) => {
+      if (areaName === "local") {
+        if (changes.gotchi) {
+          setGotchiStatus(changes.gotchi.newValue);
+        }
+        if (changes.timerFinished) {
+          setTimerFinished(changes.timerFinished.newValue);
+        }
+      }
+    };
+  
+    chrome.storage.onChanged.addListener(handleStorageChange);
+  
+    return () => {
+      chrome.storage.onChanged.removeListener(handleStorageChange);
+    };
+  }, []);
 
-  return <div className={`gotchi gotchi-${gotchiStatus?.id}`} />;
+  const eggCracked = async () => {
+    if (gotchiStatus) {
+      const updatedGotchi = { ...gotchiStatus, id: 1 }
+      await saveInState("gotchi", updatedGotchi)
+    }
+  }
+
+  return (
+    <div
+      className={`gotchi gotchi-${gotchiStatus?.id} ${
+        timerFinished && gotchiStatus?.id == 0 ? "cracking" : null
+      }`}
+      onAnimationEnd={eggCracked}
+    />
+  );
 }
 
 export default Gotchi;
