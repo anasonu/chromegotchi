@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getFromState, saveInState } from "../../utils/state";
 import { Chromegotchi } from "../../types/Chromegotchi";
 import "./Gotchi.css";
+import { addMinutes } from "../../utils/dates";
 
 function Gotchi() {
   const [gotchiStatus, setGotchiStatus] = useState<Chromegotchi>();
@@ -15,7 +16,7 @@ function Gotchi() {
   };
 
   useEffect(() => {
-    initializeData()
+    initializeData();
 
     const handleStorageChange = (changes: any, areaName: string) => {
       if (areaName === "local") {
@@ -27,9 +28,9 @@ function Gotchi() {
         }
       }
     };
-  
+
     chrome.storage.onChanged.addListener(handleStorageChange);
-  
+
     return () => {
       chrome.storage.onChanged.removeListener(handleStorageChange);
     };
@@ -37,15 +38,29 @@ function Gotchi() {
 
   const eggCracked = async () => {
     if (gotchiStatus) {
-      const updatedGotchi = { ...gotchiStatus, id: 1 }
-      await saveInState("gotchi", updatedGotchi)
+      const updatedGotchi = { ...gotchiStatus, id: 1 };
+      await saveInState("gotchi", updatedGotchi);
     }
-  }
+  };
+
+  const shouldShowCracking =
+    timerFinished &&
+    gotchiStatus?.id === 0 &&
+    Date.now() <= Date.parse(addMinutes(new Date(gotchiStatus?.evolves), 2));
+
+  useEffect(() => {
+    if (
+      gotchiStatus &&
+      Date.now() >= Date.parse(addMinutes(new Date(gotchiStatus?.evolves), 2))
+    ) {
+      eggCracked();
+    }
+  }, [gotchiStatus]);
 
   return (
     <div
       className={`gotchi gotchi-${gotchiStatus?.id} ${
-        timerFinished && gotchiStatus?.id == 0 ? "cracking" : null
+        shouldShowCracking ? "cracking" : ""
       }`}
       onAnimationEnd={eggCracked}
     />

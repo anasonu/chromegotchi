@@ -1,6 +1,6 @@
 /*global chrome*/
 
-const saveInState = (key: string, value: object): void => {
+const saveInState = (key: string, value: any): void => {
   if (window.location.hostname === "localhost") {
     localStorage.setItem(key, JSON.stringify(value));
     console.log("Saved in localstorage");
