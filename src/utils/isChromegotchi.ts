@@ -17,7 +17,7 @@ export function isChromegotchi(obj: any): obj is Chromegotchi {
       typeof obj.care_mistakes === "number" &&
       typeof obj.illness_timer === "string" &&
       typeof obj.is_sick === "boolean" &&
-      typeof obj.is_sleep === "boolean" &&
+      typeof obj.is_asleep === "boolean" &&
       typeof obj.sleep_time === "string" &&
       typeof obj.waking_time === "string" &&
       typeof obj.injections === "number"

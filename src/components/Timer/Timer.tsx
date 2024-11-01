@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getFromState } from "../../utils/state";
+import { getFromState, saveInState } from "../../utils/state";
 import "./Timer.css";
 
 const Timer: React.FC = () => {
@@ -8,19 +8,18 @@ const Timer: React.FC = () => {
   useEffect(() => {
     const fetchEggData = async () => {
       const egg = await getFromState("gotchi");
+      const timer = await getFromState("timerFinished");
       if (egg && egg.evolves) {
         const endTime = new Date(egg.evolves).getTime();
         const now = Date.now();
         const remaining = endTime - now;
         setTimeRemaining(Math.max(remaining, 0));
 
-        if (remaining <= 0) {
-          chrome.storage.local.set({ timerFinished: true });
+        if (remaining <= 0 && !timer) {
+          saveInState('timerFinished', true)
         }
       }
     };
-
-    
 
     fetchEggData();
 

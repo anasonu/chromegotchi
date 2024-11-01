@@ -1,7 +1,7 @@
-/* .gotchi {
-  display: flex;
-  justify-content: center;
-} */
+.gotchi {
+  align-self: end;
+  margin-bottom: 24px;
+}
 
 .gotchi-0 {
   height: 40px;
@@ -16,11 +16,11 @@
   height: 64px;
   width: 40px;
   background-image: url("/public/baby-sprites.png");
-  /* background-position: 0 0;
-  background-size: auto 40px; */
   transform: scale(0.6);
-  /* transform-origin: top left; */
-  animation: babyStandard 1s steps(2) infinite alternate;
+  transform-origin: bottom;
+  position: absolute;
+  animation: babyStandard 6s steps(1) infinite, alternate,
+    moveSideways 24s steps(1) infinite;
 }
 
 .gotchi-0.cracking {
@@ -36,13 +36,149 @@
 }
 
 @keyframes eggCracking {
-  0%, 10%, 30%, 50%, 70% { background-position: -80px 0; }
-  20%, 40%, 60% { background-position: 0 0; }
-  80%, 90%, 100% { background-position: -240px 0; }
+  0%,
+  10%,
+  30%,
+  50%,
+  70% {
+    background-position: -80px 0;
+  }
+  20%,
+  40%,
+  60% {
+    background-position: 0 0;
+  }
+  80%,
+  90%,
+  100% {
+    background-position: -240px 0;
+  }
 }
 
 @keyframes babyStandard {
+  0% {
+    background-position: 0 0;
+  }
+  16.67% {
+    background-position: 0 0;
+  }
+  33.33% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: -40px 0;
+  }
+  66.67% {
+    background-position: 0 0;
+  }
+  83.33% {
+    background-position: -160px 0;
+  }
   100% {
-    background-position: -80px 0;
+    background-position: 0 0;
+  }
+}
+
+/* 280px gotchi container */
+
+@keyframes moveSideways {
+  0% {
+    left: calc(50% - 20px);
+  }
+  3.125% {
+    left: calc(50% - 40px);
+  }
+  6.25% {
+    left: calc(50% - 60px);
+  }
+  9.375% {
+    left: calc(50% - 40px);
+  }
+  12.5% {
+    left: calc(50% - 60px);
+  }
+  15.625% {
+    left: calc(50% - 80px);
+  }
+  18.75% {
+    left: calc(50% - 100px);
+  }
+  21.875% {
+    left: calc(50% - 120px);
+  }
+  25% {
+    left: calc(50% - 140px);
+  }
+  28.125% {
+    left: calc(50% - 120px);
+  }
+  31.25% {
+    left: calc(50% - 140px);
+  }
+  34.375% {
+    left: calc(50% - 120px);
+  }
+  37.5% {
+    left: calc(50% - 100px);
+  }
+  40.625% {
+    left: calc(50% - 80px);
+  }
+  43.75% {
+    left: calc(50% - 60px);
+  }
+  46.875% {
+    left: calc(50% - 40px);
+  }
+  50% {
+    left: calc(50% - 20px);
+  }
+  53.125% {
+    left: calc(50%);
+  }
+  56.25% {
+    left: calc(50% + 20px);
+  }
+  59.375% {
+    left: calc(50% + 40px);
+  }
+  62.5% {
+    left: calc(50% + 60px);
+  }
+  65.625% {
+    left: calc(50% + 40px);
+  }
+  68.75% {
+    left: calc(50% + 60px);
+  }
+  71.875% {
+    left: calc(50% + 80px);
+  }
+  75% {
+    left: calc(50% + 100px);
+  }
+  78.125% {
+    left: calc(50% + 80px);
+  }
+  81.25% {
+    left: calc(50% + 60px);
+  }
+  84.375% {
+    left: calc(50% + 40px);
+  }
+  87.5% {
+    left: calc(50% + 20px);
+  }
+  90.625% {
+    left: calc(50%);
+  }
+  93.75% {
+    left: calc(50% + 20px);
+  }
+  96.875% {
+    left: calc(50%);
+  }
+  100% {
+    left: calc(50% - 20px);
   }
 }

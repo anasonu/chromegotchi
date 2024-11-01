@@ -10,6 +10,7 @@ chrome.runtime.onInstalled.addListener((details) => {
     const egg = {
       id: 0,
       name: "",
+      age: 0,
       hunger: 0,
       happiness: 0,
       evolves: addMinutes(new Date(), 5),
@@ -21,7 +22,7 @@ chrome.runtime.onInstalled.addListener((details) => {
       care_mistakes: 0,
       illness_timer: "",
       is_sick: false,
-      is_sleep: false,
+      is_asleep: false,
       sleep_time: "",
       waking_time: "",
       injections: 0,
