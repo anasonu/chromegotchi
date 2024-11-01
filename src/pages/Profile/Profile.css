@@ -1,0 +1,35 @@
+  .profile-container {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    justify-content: center;
+  }
+
+  .flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .container {
+    text-align: left;
+  }
+
+  .hungry-container {
+    margin-bottom: 12px;
+  }
+
+  p {
+    margin-bottom: 8px;
+  }
+  
+  .heart {
+    height: 16px;
+  }
+
+  a {
+    color: #000000;
+    text-decoration: none;
+    opacity: .6;
+    font-size: 16px;
+  }

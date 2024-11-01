@@ -58,12 +58,12 @@ function Gotchi() {
   }, [gotchiStatus]);
 
   return (
-    <div
-      className={`gotchi gotchi-${gotchiStatus?.id} ${
-        shouldShowCracking ? "cracking" : ""
-      }`}
-      onAnimationEnd={eggCracked}
-    />
+      <div
+        className={`gotchi gotchi-${gotchiStatus?.id} ${
+          shouldShowCracking ? "cracking" : ""
+        }`}
+        onAnimationEnd={eggCracked}
+      />
   );
 }
 
