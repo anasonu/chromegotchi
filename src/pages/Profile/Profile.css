@@ -22,6 +22,11 @@
   p {
     margin-bottom: 8px;
   }
+
+  .heart-container {
+    display: flex;
+    gap: 4px;
+  }
   
   .heart {
     height: 16px;

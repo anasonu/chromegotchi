@@ -2,11 +2,10 @@
 
 import { addMinutes } from "./utils/dates.js";
 
-
 chrome.runtime.onInstalled.addListener((details) => {
   if (details.reason === "install") {
     chrome.storage.local.set({ timerFinished: false });
-    
+
     const egg = {
       id: 0,
       name: "",
@@ -27,29 +26,30 @@ chrome.runtime.onInstalled.addListener((details) => {
       waking_time: "",
       injections: 0,
     };
-    
+
     chrome.storage.local.set({ gotchi: egg }, () => {
       console.log("Gotchi created in Chrome Storage.");
     });
-    
-    const fourMinutesFromNow = Date.now() + 240000;
-    chrome.alarms.create("notifyOneMinuteLeft", { when: fourMinutesFromNow });
-    
-    chrome.alarms.onAlarm.addListener((alarm) => {
-      if (alarm.name === "notifyOneMinuteLeft") {
-        chrome.action.setBadgeText({ text: '1' });
-        chrome.action.setBadgeBackgroundColor({ color: '#015CE6' });
-      }
-    });
+
+    const evolveTime = new Date(egg.evolves);
+    chrome.alarms.create("eggCracked", { when: evolveTime.getTime() });
+  }
+});
+
+chrome.alarms.onAlarm.addListener((alarm) => {
+  if (alarm.name === "eggCracked") {
+    chrome.action.setBadgeText({ text: "1" });
+    chrome.action.setBadgeBackgroundColor({ color: "#015CE6" });
   }
 });
 
 chrome.storage.local.get(null, (result) => {
-  console.log('Chrome Storage:', result);
+  console.log("Chrome Storage:", result);
 });
 
 chrome.storage.onChanged.addListener((changes, areaName) => {
   chrome.storage.local.get(null, (result) => {
-    console.log('Chrome Storage:', result);
+    console.log("changes", changes);
+    console.log("Chrome Storage has been updated:", result);
   });
 });
