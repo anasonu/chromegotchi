@@ -1,5 +1,6 @@
 import { addMinutes } from "../utils/dates";
 
+export const MAX_HEARTS:number = 4;
 export interface Chromegotchi {
     id: number;
     name: string;

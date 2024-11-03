@@ -9,7 +9,7 @@ const Timer: React.FC = () => {
     const fetchEggData = async () => {
       const egg = await getFromState("gotchi");
       const timer = await getFromState("timerFinished");
-      if (egg && egg.evolves) {
+      if (egg && egg.id <= 0 && egg.evolves) {
         const endTime = new Date(egg.evolves).getTime();
         const now = Date.now();
         const remaining = endTime - now;
@@ -39,14 +39,14 @@ const Timer: React.FC = () => {
     )}`;
   };
 
-  if (timeRemaining !== null && timeRemaining <= 0) {
+  if (timeRemaining !== null && timeRemaining <= 0 || !timeRemaining) {
     return null;
   }
 
   return (
     <>
       <p className="timer">
-        {timeRemaining !== null ? formatTime(timeRemaining) : "Cargando..."}
+        {timeRemaining && formatTime(timeRemaining)}
       </p>
     </>
   );
