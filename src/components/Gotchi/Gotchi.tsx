@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getFromState, saveInState } from "../../utils/state";
-import { Chromegotchi } from "../../types/Chromegotchi";
+import { Chromegotchi, defaultChromegotchis } from "../../types/Chromegotchi";
 import "./Gotchi.css";
 import { addMinutes } from "../../utils/dates";
 
@@ -38,8 +38,9 @@ function Gotchi() {
 
   const eggCracked = async () => {
     if (gotchiStatus) {
-      const updatedGotchi = { ...gotchiStatus, id: 1 };
+      const updatedGotchi = defaultChromegotchis[gotchiStatus.id + 1];
       await saveInState("gotchi", updatedGotchi);
+      chrome.alarms.create("decreaseHunger", { periodInMinutes: updatedGotchi.hh_timer })
     }
   };
 
