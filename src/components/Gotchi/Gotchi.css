@@ -1,3 +1,8 @@
+:root {
+  --gotchi-0: url("/public/egg.png");
+  --gotchi-1: url("/public/baby-sprites.png");
+}
+
 .gotchi {
   align-self: end;
   margin-bottom: 24px;
@@ -6,7 +11,7 @@
 .gotchi-0 {
   height: 40px;
   width: 40px;
-  background-image: url("/public/egg.png");
+  background-image: var(--gotchi-0);
   background-position: 0 0;
   background-size: auto 40px;
   animation: egg 1s steps(6) infinite alternate;
@@ -15,12 +20,16 @@
 .gotchi-1 {
   height: 64px;
   width: 40px;
-  background-image: url("/public/baby-sprites.png");
+  background-image: var(--gotchi-1);
   transform: scale(0.6);
   transform-origin: bottom;
   position: absolute;
   animation: babyStandard 10s steps(1) infinite, alternate,
-    moveSideways 32s steps(2) infinite;
+  moveSideways 32s steps(2) infinite;
+}
+
+.eating {
+  animation: eggCracking 3s steps(1);
 }
 
 .gotchi-0.cracking {
@@ -54,134 +63,6 @@
     background-position: -240px 0;
   }
 }
-
-/* @keyframes babyStandard {
-  0% {
-    background-position: 0 0;
-  }
-  16.67% {
-    background-position: 0 0;
-  }
-  33.33% {
-    background-position: 0 0;
-  }
-  50% {
-    background-position: -40px 0;
-  }
-  66.67% {
-    background-position: 0 0;
-  }
-  83.33% {
-    background-position: -160px 0;
-  }
-  100% {
-    background-position: 0 0;
-  }
-} */
-
-/* 280px gotchi container */
-
-/* @keyframes moveSideways {
-  0% {
-    left: calc(50% - 20px);
-  }
-  3.125% {
-    left: calc(50% - 40px);
-  }
-  6.25% {
-    left: calc(50% - 60px);
-  }
-  9.375% {
-    left: calc(50% - 40px);
-  }
-  12.5% {
-    left: calc(50% - 60px);
-  }
-  15.625% {
-    left: calc(50% - 80px);
-  }
-  18.75% {
-    left: calc(50% - 100px);
-  }
-  21.875% {
-    left: calc(50% - 120px);
-  }
-  25% {
-    left: calc(50% - 140px);
-  }
-  28.125% {
-    left: calc(50% - 120px);
-  }
-  31.25% {
-    left: calc(50% - 140px);
-  }
-  34.375% {
-    left: calc(50% - 120px);
-  }
-  37.5% {
-    left: calc(50% - 100px);
-  }
-  40.625% {
-    left: calc(50% - 80px);
-  }
-  43.75% {
-    left: calc(50% - 60px);
-  }
-  46.875% {
-    left: calc(50% - 40px);
-  }
-  50% {
-    left: calc(50% - 20px);
-  }
-  53.125% {
-    left: calc(50%);
-  }
-  56.25% {
-    left: calc(50% + 20px);
-  }
-  59.375% {
-    left: calc(50% + 40px);
-  }
-  62.5% {
-    left: calc(50% + 60px);
-  }
-  65.625% {
-    left: calc(50% + 40px);
-  }
-  68.75% {
-    left: calc(50% + 60px);
-  }
-  71.875% {
-    left: calc(50% + 80px);
-  }
-  75% {
-    left: calc(50% + 100px);
-  }
-  78.125% {
-    left: calc(50% + 80px);
-  }
-  81.25% {
-    left: calc(50% + 60px);
-  }
-  84.375% {
-    left: calc(50% + 40px);
-  }
-  87.5% {
-    left: calc(50% + 20px);
-  }
-  90.625% {
-    left: calc(50%);
-  }
-  93.75% {
-    left: calc(50% + 20px);
-  }
-  96.875% {
-    left: calc(50%);
-  }
-  100% {
-    left: calc(50% - 20px);
-  }
-} */
 
 @keyframes babyStandard {
   0% {
