@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./Feed.css";
 import { getFromState, saveInState } from "../../utils/state";
 import { useEffect, useState } from "react";
@@ -6,6 +6,7 @@ import { Chromegotchi, MAX_HEARTS } from "../../types/Chromegotchi";
 
 function Feed() {
   // let gotchi: Chromegotchi;
+  const navigate = useNavigate()
   const [gotchiStatus, setGotchiStatus] = useState<Chromegotchi>();
   const [hunger, setHunger] = useState<number>(0);
   const [happiness, setHappiness] = useState<number>(0);
@@ -17,6 +18,8 @@ function Feed() {
         return;
       }
       saveInState("gotchi", {...gotchi, hunger: gotchi.hunger + 1});
+      chrome.alarms.create("decreaseHunger", { periodInMinutes: gotchi.hh_timer })
+      navigate('/', {state: 'eating'})
     };
     fetchData()
   };

@@ -3,7 +3,7 @@ import Bath from "../../svg/Bath";
 import Feed from "../../svg/Feed";
 import Light from "../../svg/Light";
 import Medicine from "../../svg/Medicine";
-import './Navbar.css'
+import "./Navbar.css";
 
 function TopMenu() {
   return (

@@ -1,21 +1,35 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./Profile.css";
 import getHearts from "../../utils/getHearts";
 import { getFromState } from "../../utils/state";
 
 function Profile() {
-  const [happinessHearts, sethappinessHearts] = useState<JSX.Element[]>([]);
+  const [happinessHearts, setHappinessHearts] = useState<JSX.Element[]>([]);
   const [hungryHearts, setHungryHearts] = useState<JSX.Element[]>([]);
 
   const initializeData = async () => {
     const gotchi = await getFromState("gotchi");
-    sethappinessHearts(getHearts(gotchi?.happiness));
+    setHappinessHearts(getHearts(gotchi?.happiness));
     setHungryHearts(getHearts(gotchi?.hunger));
   };
 
   useEffect(() => {
     initializeData();
+
+    const handleStorageChange = (changes: any, areaName: string) => {
+      if (areaName === "local" && changes.gotchi) {
+        const updatedGotchi = changes.gotchi.newValue;
+        setHappinessHearts(getHearts(updatedGotchi?.happiness));
+        setHungryHearts(getHearts(updatedGotchi?.hunger));
+      }
+    };
+
+    chrome.storage.onChanged.addListener(handleStorageChange);
+    
+    return () => {
+      chrome.storage.onChanged.removeListener(handleStorageChange);
+    };
   }, []);
 
   return (

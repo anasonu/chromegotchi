@@ -3,10 +3,13 @@ import { getFromState, saveInState } from "../../utils/state";
 import { Chromegotchi, defaultChromegotchis } from "../../types/Chromegotchi";
 import "./Gotchi.css";
 import { addMinutes } from "../../utils/dates";
+import { useLocation } from "react-router-dom";
 
 function Gotchi() {
+  const location = useLocation()
   const [gotchiStatus, setGotchiStatus] = useState<Chromegotchi>();
   const [timerFinished, setTimerFinished] = useState<boolean>(true);
+  const [isEating, setIsEating] = useState<boolean>(false)
 
   const initializeData = async () => {
     const gotchiData = await getFromState("gotchi");
@@ -36,11 +39,28 @@ function Gotchi() {
     };
   }, []);
 
-  const eggCracked = async () => {
-    if (gotchiStatus) {
-      const updatedGotchi = defaultChromegotchis[gotchiStatus.id + 1];
+  useEffect(() => {
+    if (location.state === "eating") {
+      setIsEating(true);
+    }
+  }, [location.state]);
+
+  const handleAnimationEnd = async () => {
+    const gotchi = await getFromState('gotchi')
+
+    if(gotchi.id == 0) {
+      const updatedGotchi = defaultChromegotchis[1];
       await saveInState("gotchi", updatedGotchi);
-      chrome.alarms.create("decreaseHunger", { periodInMinutes: updatedGotchi.hh_timer })
+      chrome.alarms.create("decreaseHunger", {
+        periodInMinutes: updatedGotchi.hh_timer,
+      });
+    }
+
+    if(location.state === 'eating') {
+      setIsEating(false)
+      chrome.alarms.create("decreaseHunger", {
+        periodInMinutes: gotchi.hh_timer,
+      });
     }
   };
 
@@ -52,19 +72,20 @@ function Gotchi() {
   useEffect(() => {
     if (
       gotchiStatus &&
+      gotchiStatus.id <= 0 &&
       Date.now() >= Date.parse(addMinutes(new Date(gotchiStatus?.evolves), 2))
     ) {
-      eggCracked();
+      handleAnimationEnd();
     }
   }, [gotchiStatus]);
 
   return (
-      <div
-        className={`gotchi gotchi-${gotchiStatus?.id} ${
-          shouldShowCracking ? "cracking" : ""
-        }`}
-        onAnimationEnd={eggCracked}
-      />
+    <div
+      className={`gotchi gotchi-${gotchiStatus?.id} ${
+        shouldShowCracking ? "cracking" : ""
+      } ${isEating && "eating"}`}
+      onAnimationEnd={handleAnimationEnd}
+    />
   );
 }
 
