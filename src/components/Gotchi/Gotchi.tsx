@@ -58,6 +58,9 @@ function Gotchi() {
 
     if(location.state === 'eating') {
       setIsEating(false)
+      chrome.alarms.create("decreaseHunger", {
+        periodInMinutes: gotchi.hh_timer,
+      });
     }
   };
 

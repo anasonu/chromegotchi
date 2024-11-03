@@ -25,11 +25,11 @@
   transform-origin: bottom;
   position: absolute;
   animation: babyStandard 10s steps(1) infinite, alternate,
-  moveSideways 32s steps(2) infinite;
+    moveSideways 32s steps(2) infinite;
 }
 
-.eating {
-  animation: eggCracking 3s steps(1);
+.gotchi-1.eating {
+  animation: gotchi-1-eating 6s steps(1);
 }
 
 .gotchi-0.cracking {
@@ -199,5 +199,37 @@
   }
   100% {
     left: calc(50%);
+  }
+}
+
+/* @keyframes gotchi-1-eating {
+  0%,
+  12.5%,
+  37.5%,
+  62.5%,
+  87.5% {
+    background-position: -40px 0;
+  }
+  25%,
+  50%,
+  75%,
+  100% {
+    background-position: -120px 0;
+  }
+} */
+@keyframes gotchi-1-eating {
+  0%,
+  20%,
+  40%,
+  60%,
+  80%,
+  100% {
+    background-position: -120px 0;
+  }
+  30%,
+  50%,
+  70%,
+  90% {
+    background-position: -40px 0;
   }
 }
