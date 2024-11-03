@@ -1,0 +1,25 @@
+button {
+    font-family: 'Silkscreen', cursive;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
+  
+  .window {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    height: 80%;
+    margin-top: 20px;
+  }
+  
+  .light-color {
+    color: var(--light-color);
+  }
+  
+  .feed-options {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }

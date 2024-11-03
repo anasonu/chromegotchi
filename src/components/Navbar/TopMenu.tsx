@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import Bath from "../../svg/Bath";
 import Feed from "../../svg/Feed";
 import Light from "../../svg/Light";
@@ -7,9 +8,9 @@ import './Navbar.css'
 function TopMenu() {
   return (
     <nav className="menu top-menu">
-      <button>
+      <NavLink to="/feed">
         <Feed />
-      </button>
+      </NavLink>
       <button>
         <Bath />
       </button>

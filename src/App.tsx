@@ -5,6 +5,7 @@ import BottomMenu from "./components/Navbar/BottomMenu";
 import TopMenu from "./components/Navbar/TopMenu";
 import Timer from "./components/Timer/Timer";
 import Profile from "./pages/Profile/Profile";
+import Feed from "./pages/Feed/Feed";
 
 function App() {
   return (
@@ -23,9 +24,8 @@ function App() {
             }
           />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/feed" element={<Feed />} />
         </Routes>
-        {/* <Gotchi /> */}
-        {/* <Timer /> */}
       </div>
       <BottomMenu />
     </div>

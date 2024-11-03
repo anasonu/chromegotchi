@@ -1,4 +1,4 @@
-const MAX_HEARTS = 4;
+import { MAX_HEARTS } from "../types/Chromegotchi";
 
 function getHearts (currentValue: number) {
   const arr = [];
