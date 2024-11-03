@@ -37,11 +37,11 @@ function Gotchi() {
   }, []);
 
   const eggCracked = async () => {
-    if (gotchiStatus) {
-      const updatedGotchi = defaultChromegotchis[gotchiStatus.id + 1];
-      await saveInState("gotchi", updatedGotchi);
-      chrome.alarms.create("decreaseHunger", { periodInMinutes: updatedGotchi.hh_timer })
-    }
+    const updatedGotchi = defaultChromegotchis[1];
+    await saveInState("gotchi", updatedGotchi);
+    chrome.alarms.create("decreaseHunger", {
+      periodInMinutes: updatedGotchi.hh_timer,
+    });
   };
 
   const shouldShowCracking =
@@ -52,6 +52,7 @@ function Gotchi() {
   useEffect(() => {
     if (
       gotchiStatus &&
+      gotchiStatus.id <= 0 &&
       Date.now() >= Date.parse(addMinutes(new Date(gotchiStatus?.evolves), 2))
     ) {
       eggCracked();
@@ -59,12 +60,12 @@ function Gotchi() {
   }, [gotchiStatus]);
 
   return (
-      <div
-        className={`gotchi gotchi-${gotchiStatus?.id} ${
-          shouldShowCracking ? "cracking" : ""
-        }`}
-        onAnimationEnd={eggCracked}
-      />
+    <div
+      className={`gotchi gotchi-${gotchiStatus?.id} ${
+        shouldShowCracking ? "cracking" : ""
+      }`}
+      onAnimationEnd={eggCracked}
+    />
   );
 }
 

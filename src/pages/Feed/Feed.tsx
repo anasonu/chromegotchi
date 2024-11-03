@@ -17,6 +17,7 @@ function Feed() {
         return;
       }
       saveInState("gotchi", {...gotchi, hunger: gotchi.hunger + 1});
+      chrome.alarms.create("decreaseHunger", { periodInMinutes: gotchi.hh_timer })
     };
     fetchData()
   };
